@@ -25,6 +25,9 @@
         <activity android:name=".activities.auth.LoginActivity">
 
         </activity>
+        <activity android:name=".activities.auth.RegisterActivity">
+
+        </activity>
     </application>
 
 </manifest>

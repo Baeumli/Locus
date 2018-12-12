@@ -3,4 +3,9 @@
     <string name="go_to_activity_2">Go to Activity 2</string>
     <string name="go_to_activity_1">Go To Activity 1</string>
     <string name="activity_2">Activity 2</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="create_account">Create Account</string>
 </resources>

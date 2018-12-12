@@ -6,26 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".activities.auth.LoginActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:contentDescription="TODO"
-        android:src="@drawable/ic_treasure"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
-
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="329dp"
-        android:layout_height="279dp"
+        android:layout_height="447dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -35,16 +19,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.89">
+        app:layout_constraintVertical_bias="0.77">
 
         <TextView
-            android:id="@+id/lblUsername"
+            android:id="@+id/lblCreateUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/username" />
 
         <EditText
-            android:id="@+id/etUsername"
+            android:id="@+id/etCreateUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints=""
@@ -52,36 +36,66 @@
             android:inputType="textPassword" />
 
         <TextView
-            android:id="@+id/lblPassword"
+            android:id="@+id/lblEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/password" />
+            android:text="E-Mail" />
 
         <EditText
-            android:id="@+id/etPassword"
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress" />
+
+        <TextView
+            android:id="@+id/lblPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone number" />
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="phone" />
+
+        <TextView
+            android:id="@+id/lblCreatePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Password" />
+
+        <EditText
+            android:id="@+id/etCreatePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword" />
 
         <TextView
-            android:id="@+id/lblForgotPassword"
+            android:id="@+id/lblConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/forgot_password"
-            android:textAlignment="textEnd" />
+            android:text="Confirm Password" />
+
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/btnSignIn"
+            android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:background="@drawable/buttonshape"
-            android:textColor="#FFFFFF"
-            android:text="@string/sign_in" />
+            android:text="@string/create_account"
+            android:textColor="#FFFFFF" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -95,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:text="Don't have an account? "
+                android:text="Already have an account? "
                 android:textAlignment="center" />
 
             <TextView
@@ -103,7 +117,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Create Account"
+                android:clickable="true"
+                android:textColor="@color/colorHyperLink"
+                android:text="Sign In"
                 android:textAlignment="center" />
 
         </LinearLayout>
