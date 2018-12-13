@@ -1,12 +1,12 @@
-package baeumli.me.locus.activities.main;
+package me.baeumli.locus.activities.main;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 
-import baeumli.me.locus.R;
-import baeumli.me.locus.activities.auth.LoginActivity;
+import me.baeumli.locus.R;
+import me.baeumli.locus.activities.auth.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

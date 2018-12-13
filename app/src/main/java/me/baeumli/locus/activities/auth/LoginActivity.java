@@ -1,4 +1,4 @@
-package baeumli.me.locus.activities.auth;
+package me.baeumli.locus.activities.auth;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import baeumli.me.locus.R;
+import me.baeumli.locus.R;
 
 public class LoginActivity extends AppCompatActivity {
 

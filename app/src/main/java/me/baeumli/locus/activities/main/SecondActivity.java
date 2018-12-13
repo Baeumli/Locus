@@ -1,9 +1,9 @@
-package baeumli.me.locus.activities.main;
+package me.baeumli.locus.activities.main;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-import baeumli.me.locus.R;
+import me.baeumli.locus.R;
 
 public class SecondActivity extends Activity {
     @Override
