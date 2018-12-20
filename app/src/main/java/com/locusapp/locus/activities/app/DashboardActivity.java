@@ -18,12 +18,12 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import com.locusapp.locus.R;
 import com.locusapp.locus.fragments.AchievementsFragment;
+import com.locusapp.locus.fragments.BountyFragment;
 import com.locusapp.locus.fragments.DashboardFragment;
-import com.locusapp.locus.fragments.MissionFragment;
 import com.locusapp.locus.fragments.SettingsFragment;
 
 public class DashboardActivity extends AppCompatActivity
-        implements DashboardFragment.OnFragmentInteractionListener, MissionFragment.OnFragmentInteractionListener,
+        implements DashboardFragment.OnFragmentInteractionListener, BountyFragment.OnFragmentInteractionListener,
         AchievementsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener {
 
     private TextView mTextMessage;
@@ -39,7 +39,7 @@ public class DashboardActivity extends AppCompatActivity
                 case R.id.navigation_home:
                     switchToFragment1();
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_bounty:
                     switchToFragment2();
                     return true;
                 case R.id.navigation_notifications:
@@ -57,7 +57,7 @@ public class DashboardActivity extends AppCompatActivity
 
     public void switchToFragment2() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.fragment_container, new MissionFragment()).commit();
+        manager.beginTransaction().replace(R.id.fragment_container, new BountyFragment()).commit();
     }
 
     public void switchToFragment3() {
