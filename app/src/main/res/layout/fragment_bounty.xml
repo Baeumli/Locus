@@ -6,9 +6,10 @@
     tools:context=".fragments.BountyFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ListView
+        android:id="@+id/listViewBounty"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_mission_fragment" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

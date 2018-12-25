@@ -29,9 +29,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-
-
-
         </android.support.v7.widget.Toolbar>
 
         <FrameLayout
@@ -66,7 +63,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:menu="@menu/drawer" />
-
 
 </android.support.v4.widget.DrawerLayout>
 

@@ -1,5 +1,6 @@
 package com.locusapp.locus.activities.app;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,20 +17,33 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.locusapp.locus.R;
+import com.locusapp.locus.activities.auth.LoginActivity;
 import com.locusapp.locus.fragments.AchievementsFragment;
 import com.locusapp.locus.fragments.BountyFragment;
 import com.locusapp.locus.fragments.DashboardFragment;
 import com.locusapp.locus.fragments.SettingsFragment;
 
-public class DashboardActivity extends AppCompatActivity
-        implements DashboardFragment.OnFragmentInteractionListener, BountyFragment.OnFragmentInteractionListener,
-        AchievementsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener {
+public class DashboardActivity extends AppCompatActivity implements
+        DashboardFragment.OnFragmentInteractionListener,
+        BountyFragment.OnFragmentInteractionListener,
+        AchievementsFragment.OnFragmentInteractionListener,
+        SettingsFragment.OnFragmentInteractionListener {
 
     private TextView mTextMessage;
     private FrameLayout fragmentContainer;
     private DrawerLayout drawerLayout;
-
+    private DashboardFragment dashboardFragment;
+    private BountyFragment bountyFragment;
+    private GoogleSignInClient mGoogleSignInClient;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -42,8 +56,7 @@ public class DashboardActivity extends AppCompatActivity
                 case R.id.navigation_bounty:
                     switchToFragment2();
                     return true;
-                case R.id.navigation_notifications:
-                    switchToFragment3();
+                case R.id.navigation_map:
                     return true;
             }
             return false;
@@ -52,17 +65,13 @@ public class DashboardActivity extends AppCompatActivity
 
     public void switchToFragment1() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
+        manager.beginTransaction().hide(bountyFragment).show(dashboardFragment).commit();
+
     }
 
     public void switchToFragment2() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.fragment_container, new BountyFragment()).commit();
-    }
-
-    public void switchToFragment3() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.fragment_container, new DashboardFragment()).commit();
+        manager.beginTransaction().hide(dashboardFragment).show(bountyFragment).commit();
     }
 
     @Override
@@ -76,6 +85,13 @@ public class DashboardActivity extends AppCompatActivity
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         configureToolbar();
         configureNavigationDrawer();
+
+        dashboardFragment = new DashboardFragment();
+        bountyFragment = new BountyFragment();
+
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().add(R.id.fragment_container, dashboardFragment)
+        .add(R.id.fragment_container, bountyFragment).show(dashboardFragment).commit();
     }
 
     private void configureToolbar() {
@@ -98,6 +114,21 @@ public class DashboardActivity extends AppCompatActivity
                     f = new AchievementsFragment();
                 } else if (itemId == R.id.settings) {
                     f = new SettingsFragment();
+                } else if (itemId == R.id.logout) {
+                    FirebaseAuth.getInstance().signOut();
+
+                    mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(getApplicationContext(),"Logged Out",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+
+                    drawerLayout.closeDrawers();
+                    return true;
                 }
                 if (f != null) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -126,5 +157,17 @@ public class DashboardActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 }
