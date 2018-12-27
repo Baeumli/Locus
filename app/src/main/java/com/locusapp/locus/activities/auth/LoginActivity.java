@@ -25,6 +25,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.locusapp.locus.BountyListActivity;
+import com.locusapp.locus.CreateBountyActivity;
 import com.locusapp.locus.MapActivity;
 import com.locusapp.locus.R;
 import com.locusapp.locus.activities.app.DashboardActivity;
@@ -178,13 +180,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void proceedToDashboard(FirebaseUser user) {
-        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), CreateBountyActivity.class);
         startActivity(intent);
         finish();
     }
 
     private void proceedToDashboard() {
-        Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), CreateBountyActivity.class);
         startActivity(intent);
         finish();
     }

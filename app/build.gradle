@@ -41,6 +41,7 @@ dependencies {
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:6.8.0'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'com.google.firebase:firebase-firestore:17.1.4'
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

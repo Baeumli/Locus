@@ -80,7 +80,6 @@ public class RegisterActivity extends AppCompatActivity {
         if (currentUser != null) {
             proceedToDashboard(currentUser);
         }
-
     }
 
     private void firebaseCreateUserWithEmailAndPassword(String email, String password) {
@@ -114,6 +113,4 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-
 }

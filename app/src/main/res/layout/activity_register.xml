@@ -22,12 +22,6 @@
         app:layout_constraintVertical_bias="0.77">
 
         <TextView
-            android:id="@+id/lblCreateUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/username" />
-
-        <TextView
             android:id="@+id/lblEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
