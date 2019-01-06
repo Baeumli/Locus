@@ -2,19 +2,20 @@ package com.locusapp.locus.models;
 
 import android.media.Image;
 
+import com.google.firebase.firestore.GeoPoint;
+
 public class Bounty {
 
     private String title, creator, hint;
-    private Image picture;
-    private long longitude, latitude;
+    private Image image;
+    private GeoPoint location;
 
-    public Bounty(String title, String creator, String hint, Image picture, long longitude, long latitude) {
+    public Bounty(String title, String creator, String hint, Image image, GeoPoint location) {
         this.title = title;
         this.creator = creator;
         this.hint = hint;
-        this.picture = picture;
-        this.longitude = longitude;
-        this.latitude = latitude;
+        this.image = image;
+        this.location = location;
     }
 
     public String getTitle() {
@@ -41,27 +42,19 @@ public class Bounty {
         this.hint = hint;
     }
 
-    public Image getPicture() {
-        return picture;
+    public Image getImage() {
+        return image;
     }
 
-    public void setPicture(Image picture) {
-        this.picture = picture;
+    public void setImage(Image image) {
+        this.image = image;
     }
 
-    public long getLongitude() {
-        return longitude;
+    public GeoPoint getLocation() {
+        return location;
     }
 
-    public void setLongitude(long longitude) {
-        this.longitude = longitude;
-    }
-
-    public long getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(long latitude) {
-        this.latitude = latitude;
+    public void setLocation(GeoPoint location) {
+        this.location = location;
     }
 }

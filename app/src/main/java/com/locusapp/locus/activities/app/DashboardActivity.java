@@ -28,13 +28,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.locusapp.locus.R;
 import com.locusapp.locus.activities.auth.LoginActivity;
 import com.locusapp.locus.fragments.AchievementsFragment;
-import com.locusapp.locus.fragments.BountyFragment;
+import com.locusapp.locus.fragments.ListFragment;
+import com.locusapp.locus.fragments.MapFragment;
 import com.locusapp.locus.fragments.DashboardFragment;
 import com.locusapp.locus.fragments.SettingsFragment;
 
 public class DashboardActivity extends AppCompatActivity implements
         DashboardFragment.OnFragmentInteractionListener,
-        BountyFragment.OnFragmentInteractionListener,
+        MapFragment.OnFragmentInteractionListener,
+        ListFragment.OnFragmentInteractionListener,
         AchievementsFragment.OnFragmentInteractionListener,
         SettingsFragment.OnFragmentInteractionListener {
 
@@ -42,7 +44,8 @@ public class DashboardActivity extends AppCompatActivity implements
     private FrameLayout fragmentContainer;
     private DrawerLayout drawerLayout;
     private DashboardFragment dashboardFragment;
-    private BountyFragment bountyFragment;
+    private MapFragment mapFragment;
+    private ListFragment listFragment;
     private GoogleSignInClient mGoogleSignInClient;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -51,29 +54,33 @@ public class DashboardActivity extends AppCompatActivity implements
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    switchToFragment1();
+                    switchToHomeFragment();
                     return true;
                 case R.id.navigation_bounty:
-                    switchToFragment2();
+                    switchToListFragment();
                     return true;
                 case R.id.navigation_map:
+                    switchToMapFragment();
                     return true;
             }
             return false;
         }
     };
 
-    public void switchToFragment1() {
+    public void switchToHomeFragment() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().hide(bountyFragment).show(dashboardFragment).commit();
-
+        manager.beginTransaction().hide(mapFragment).hide(listFragment).show(dashboardFragment).commit();
     }
 
-    public void switchToFragment2() {
+    public void switchToMapFragment() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().hide(dashboardFragment).show(bountyFragment).commit();
+        manager.beginTransaction().hide(dashboardFragment).hide(listFragment).show(mapFragment).commit();
     }
 
+    public void switchToListFragment() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().hide(dashboardFragment).hide(mapFragment).show(listFragment).commit();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,11 +94,16 @@ public class DashboardActivity extends AppCompatActivity implements
         configureNavigationDrawer();
 
         dashboardFragment = new DashboardFragment();
-        bountyFragment = new BountyFragment();
+        mapFragment = new MapFragment();
+        listFragment =  new ListFragment();
 
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().add(R.id.fragment_container, dashboardFragment)
-        .add(R.id.fragment_container, bountyFragment).show(dashboardFragment).commit();
+        manager.beginTransaction()
+                .add(R.id.fragment_container, dashboardFragment)
+                .add(R.id.fragment_container, mapFragment).hide(mapFragment)
+                .add(R.id.fragment_container, listFragment).hide(listFragment)
+                .show(dashboardFragment)
+                .commit();
     }
 
     private void configureToolbar() {

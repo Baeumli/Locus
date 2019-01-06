@@ -27,4 +27,34 @@
 
     <string name="access_token">pk.eyJ1IjoiYmFldW1saSIsImEiOiJjanB4MXB6Y28wNzVrNDJtczlqMnRmdDA3In0.IidMdlVijfTHG1-owtKAWw</string>
     <string name="logout">Logout</string>
+
+    <string name="geofence_error_unknown">
+        Unknown Error: Geofencing is not available at the moment.
+    </string>
+
+    <string name="geofence_error_not_available">
+        Error: Geofencing is not available at the moment.
+    </string>
+
+    <string name="geofence_error_too_many_geofences">
+        Error: Your App has registered too many geofences.
+    </string>
+
+    <string name="geofence_error_too_many_pending_intents">
+        Error: Too many PendingIntents in call addGeofences().
+    </string>
+
+    <string name="geofence_transition_entered">
+        Entered Geofence.
+    </string>
+
+    <string name="geofence_transition_exited">
+        Exited Geofence.
+    </string>
+
+    <string name="unknown_geofence_transition">
+        Unknown Geofence.
+    </string>
+
+
 </resources>

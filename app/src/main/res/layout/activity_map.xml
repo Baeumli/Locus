@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.sothree.slidinguppanel.SlidingUpPanelLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    app:umanoPanelHeight="20dp">
-
-    <!-- Main Content -->
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:mapbox="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:id="@+id/constraintLayout"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto">
 
         <!-- Map View -->
         <com.mapbox.mapboxsdk.maps.MapView
@@ -25,41 +18,7 @@
             mapbox:mapbox_styleUrl="@string/mapbox_style_mapbox_streets"
             mapbox:mapbox_cameraZoom="11" >
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/floatingActionButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:layout_gravity="right|top"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                app:srcCompat="@android:drawable/ic_menu_help"
-                mapbox:backgroundTint="@color/colorPrimary" />
         </com.mapbox.mapboxsdk.maps.MapView>
 
-    </FrameLayout>
 
-    <!-- Slider -->
-    <android.widget.LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@android:color/holo_red_dark"
-            app:srcCompat="@android:drawable/arrow_up_float" />
-
-        <ListView
-            android:id="@+id/listview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </ListView>
-
-    </android.widget.LinearLayout>
-
-
-</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+</android.support.constraint.ConstraintLayout>

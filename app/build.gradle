@@ -38,10 +38,16 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:6.8.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:6.8.1'
+    implementation "com.mapbox.mapboxsdk:mapbox-android-geocoder:1.0.0"
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
-    implementation 'com.google.firebase:firebase-firestore:17.1.4'
-    implementation 'com.google.firebase:firebase-storage:16.0.1'
+    implementation 'com.google.firebase:firebase-firestore:17.1.5'
+    implementation 'com.google.firebase:firebase-storage:16.0.5'
+    implementation "com.google.android.gms:play-services-location:16.0.0"
+    implementation "com.google.android.gms:play-services-places:16.0.0"
+    implementation 'com.firebaseui:firebase-ui-storage:4.1.0'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

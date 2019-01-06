@@ -3,8 +3,10 @@
     package="com.locusapp.locus">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
 
     <application
@@ -14,7 +16,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.locusapp.locus.fileprovider"
@@ -22,8 +23,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths">
-            </meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity android:name=".activities.MainActivity" />
@@ -42,8 +42,12 @@
             android:name=".activities.app.DashboardActivity"
             android:label="@string/title_activity_dashboard" />
         <activity android:name=".MapActivity" />
-        <activity android:name=".BountyListActivity" />
-        <activity android:name=".CreateBountyActivity"></activity>
+        <activity android:name=".CreateBountyActivity" />
+        <activity android:name=".activities.app.BountyDetailActivity" />
+
+        <service android:name=".models.GeofenceTransitionsIntentService" />
+
+        <activity android:name=".WinActivity"></activity>
     </application>
 
 </manifest>
