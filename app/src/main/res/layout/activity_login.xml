@@ -13,8 +13,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:contentDescription="TODO"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/locuslogo"
         android:src="@drawable/ic_splash"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +24,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
-        android:layout_height="325dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -37,15 +39,15 @@
             android:id="@+id/lblUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email" />
+            android:text="@string/email" />
 
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
             android:ems="10"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            tools:targetApi="o" />
 
         <TextView
             android:id="@+id/lblPassword"
@@ -67,7 +69,8 @@
             android:clickable="true"
             android:focusable="true"
             android:text="@string/forgot_password"
-            android:textAlignment="textEnd" />
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorHyperLink" />
 
         <Button
             android:id="@+id/btnLogin"
@@ -75,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:backgroundTint="@color/colorPrimary"
             android:text="@string/sign_in"
             android:textColor="#FFFFFF" />
 
@@ -82,14 +86,14 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="OR"
+            android:text="@string/or"
             android:textAlignment="center" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/btnSignInGoogle"
-            app:buttonSize="icon_only"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:buttonSize="icon_only">
 
         </com.google.android.gms.common.SignInButton>
 
@@ -105,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:text="Don't have an account? "
+                android:text="@string/don_t_have_an_account"
                 android:textAlignment="center" />
 
             <TextView
@@ -114,7 +118,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:clickable="true"
-                android:text="Create Account"
+                android:focusable="true"
+                android:text="@string/create_account"
                 android:textAlignment="center"
                 android:textColor="@color/colorHyperLink" />
 

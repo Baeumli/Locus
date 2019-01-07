@@ -24,7 +24,7 @@
             android:id="@+id/lblTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Title" />
+            android:text="@string/title" />
 
         <EditText
             android:id="@+id/etTitle"
@@ -57,7 +57,7 @@
             android:id="@+id/imgView"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            app:srcCompat="@color/colorHyperLink" />
+            app:srcCompat="@android:color/transparent" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btnTakePhoto"
@@ -76,6 +76,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="Submit"
+            android:backgroundTint="@color/colorPrimary"
             android:textColor="#FFFFFF" />
 
     </LinearLayout>
