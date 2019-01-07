@@ -26,9 +26,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".activities.MainActivity" />
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".activities.app.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,13 +40,13 @@
         <activity
             android:name=".activities.app.DashboardActivity"
             android:label="@string/title_activity_dashboard" />
-        <activity android:name=".MapActivity" />
-        <activity android:name=".CreateBountyActivity" />
+        <activity android:name=".activities.app.MapActivity" />
+        <activity android:name=".activities.app.CreateBountyActivity" />
         <activity android:name=".activities.app.BountyDetailActivity" />
 
         <service android:name=".models.GeofenceTransitionsIntentService" />
 
-        <activity android:name=".WinActivity"></activity>
+        <activity android:name=".activities.app.WinActivity"></activity>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,16 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.locusapp.locus.CreateBountyActivity;
+import com.locusapp.locus.activities.app.CreateBountyActivity;
 import com.locusapp.locus.R;
 import com.locusapp.locus.adapters.ListAdapter;
+import com.locusapp.locus.models.FirebaseDAO;
+
 
 import java.util.ArrayList;
 
@@ -33,10 +29,6 @@ public class ListFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private static final String TAG = "ListFragment";
-
-    private ArrayList<String> titles = new ArrayList<>();
-    private ArrayList<String> locations = new ArrayList<>();
-    private ArrayList<String> ids = new ArrayList<>();
 
     private Button btnCreateBounty;
 
@@ -48,7 +40,6 @@ public class ListFragment extends Fragment {
         ListFragment fragment = new ListFragment();
         return fragment;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,32 +53,19 @@ public class ListFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_list, container, false);
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-        firestore.collection("Bounties")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@javax.annotation.Nullable QuerySnapshot querySnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w(TAG, "Listen failed.", e);
-                            return;
-                        }
+        FirebaseDAO firebaseDAO = new FirebaseDAO();
 
-                        titles.clear();
-                        locations.clear();
-                        ids.clear();
+        firebaseDAO.getBountyList(new FirebaseDAO.FirebaseListCallback() {
 
-                        for (QueryDocumentSnapshot document : querySnapshot) {
-                            titles.add(document.getString("title"));
-                            locations.add(document.get("location").toString());
-                            ids.add(document.getId());
-                        }
-                        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-                        ListAdapter adapter = new ListAdapter(ids, locations, titles, getContext());
-                        recyclerView.setAdapter(adapter);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    }
-                });
+            @Override
+            public void onCallback(ArrayList<String> titles, ArrayList<String> locations, ArrayList<String> ids) {
+                RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+                ListAdapter adapter = new ListAdapter(ids, locations, titles, getContext());
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            }
+        });
 
         return view;
     }

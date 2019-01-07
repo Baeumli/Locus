@@ -109,11 +109,6 @@ public class GeofenceTransitionsIntentService extends IntentService {
     }
 
     /**
-     * Posts a notification in the notification bar when a transition is detected.
-     * If the user clicks the notification, control goes to the MainActivity.
-     */
-
-    /**
      * Maps geofence transition types to their human-readable equivalents.
      *
      * @param transitionType    A transition type constant defined in Geofence

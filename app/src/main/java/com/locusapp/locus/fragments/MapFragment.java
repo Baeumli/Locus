@@ -12,17 +12,19 @@ import android.view.ViewGroup;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.locusapp.locus.R;
 
+import com.locusapp.locus.models.FirebaseDAO;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+
+import java.util.ArrayList;
 
 public class MapFragment extends Fragment {
 
@@ -61,32 +63,22 @@ public class MapFragment extends Fragment {
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
-                firestore = FirebaseFirestore.getInstance();
 
-                firestore.collection("Bounties")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                FirebaseDAO firebaseDAO = new FirebaseDAO();
+                firebaseDAO.getLatLng(new FirebaseDAO.FirebaseLatLngCallback() {
+                    @Override
+                    public void onCallback(ArrayList<LatLng> locations, ArrayList<String> titles) {
 
-                                        // add makers
-                                        mapboxMap.addMarker(new MarkerOptions()
-                                        .position(new LatLng(
-                                                documentSnapshot.getGeoPoint("location").getLatitude(),
-                                                documentSnapshot.getGeoPoint("location").getLongitude()
-                                        ))
-                                        .title(documentSnapshot.getString("title"))
-                                        .snippet(documentSnapshot.getGeoPoint("location").toString()));
-                                    }
-                                }
-                            }
-                        });
+                        for (int i = 0; i < locations.size(); i++) {
+                            mapboxMap.addMarker(new MarkerOptions()
+                                    .position(locations.get(i))
+                                    .title(titles.get(i)));
+                        }
+                    }
+                });
             }
         });
     }
-
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -111,9 +103,10 @@ public class MapFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    // Lifecycle Methods
 
     @Override
     public void onStart() {

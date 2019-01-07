@@ -48,39 +48,26 @@ public class DashboardActivity extends AppCompatActivity implements
     private ListFragment listFragment;
     private GoogleSignInClient mGoogleSignInClient;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            = item -> {
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        switchToHomeFragment();
+                        return true;
+                    case R.id.navigation_bounty:
+                        switchToListFragment();
+                        return true;
+                    case R.id.navigation_map:
+                        switchToMapFragment();
+                        return true;
+                }
+                return false;
+            };
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    switchToHomeFragment();
-                    return true;
-                case R.id.navigation_bounty:
-                    switchToListFragment();
-                    return true;
-                case R.id.navigation_map:
-                    switchToMapFragment();
-                    return true;
-            }
-            return false;
-        }
-    };
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
-    public void switchToHomeFragment() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().hide(mapFragment).hide(listFragment).show(dashboardFragment).commit();
     }
 
-    public void switchToMapFragment() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().hide(dashboardFragment).hide(listFragment).show(mapFragment).commit();
-    }
-
-    public void switchToListFragment() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().hide(dashboardFragment).hide(mapFragment).show(listFragment).commit();
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +91,47 @@ public class DashboardActivity extends AppCompatActivity implements
                 .add(R.id.fragment_container, listFragment).hide(listFragment)
                 .show(dashboardFragment)
                 .commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch(itemId) {
+            // Android home
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            // manage other entries if you have it ...
+        }
+        return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+
+    public void switchToHomeFragment() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().hide(mapFragment).hide(listFragment).show(dashboardFragment).commit();
+    }
+
+    public void switchToMapFragment() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().hide(dashboardFragment).hide(listFragment).show(mapFragment).commit();
+    }
+
+    public void switchToListFragment() {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().hide(dashboardFragment).hide(mapFragment).show(listFragment).commit();
     }
 
     private void configureToolbar() {
@@ -138,10 +166,10 @@ public class DashboardActivity extends AppCompatActivity implements
                             finish();
                         }
                     });
-
                     drawerLayout.closeDrawers();
                     return true;
                 }
+
                 if (f != null) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragment_container, f);
@@ -152,34 +180,5 @@ public class DashboardActivity extends AppCompatActivity implements
                 return false;
             }
         });
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        switch(itemId) {
-            // Android home
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-            // manage other entries if you have it ...
-        }
-        return true;
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 }

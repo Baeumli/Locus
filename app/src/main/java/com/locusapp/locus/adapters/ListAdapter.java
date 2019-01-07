@@ -72,7 +72,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             lblTitle = itemView.findViewById(R.id.lblTitle);
             lblLocation = itemView.findViewById(R.id.lblLocation);
             listLayout = itemView.findViewById(R.id.listLayout);
-
         }
     }
 

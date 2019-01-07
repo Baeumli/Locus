@@ -30,7 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private String email, password;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);

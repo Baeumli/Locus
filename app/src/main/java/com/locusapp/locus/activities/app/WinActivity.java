@@ -1,4 +1,4 @@
-package com.locusapp.locus;
+package com.locusapp.locus.activities.app;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.locusapp.locus.R;
 import com.locusapp.locus.models.GlideApp;
 import com.locusapp.locus.models.MyGlideAppModule;
 

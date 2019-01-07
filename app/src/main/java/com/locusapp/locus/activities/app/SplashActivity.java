@@ -1,4 +1,4 @@
-package com.locusapp.locus.activities;
+package com.locusapp.locus.activities.app;
 
 import android.content.Intent;
 import android.os.Bundle;
