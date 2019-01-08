@@ -50,14 +50,10 @@ public class CreateBountyActivity extends AppCompatActivity {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    // UI variables
-    private FloatingActionButton btnTakePhoto;
-    private Button btnCreateBounty;
     private EditText etTitle, etHint;
     private ImageView imgView;
 
     private Boolean mLocationPermissionsGranted = false;
-    private FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +63,9 @@ public class CreateBountyActivity extends AppCompatActivity {
         // XML Linking
         etTitle = findViewById(R.id.etTitle);
         etHint = findViewById(R.id.etHint);
-        btnTakePhoto = findViewById(R.id.btnTakePhoto);
-        btnCreateBounty = findViewById(R.id.btnCreateBounty);
+        // UI variables
+        FloatingActionButton btnTakePhoto = findViewById(R.id.btnTakePhoto);
+        Button btnCreateBounty = findViewById(R.id.btnCreateBounty);
         imgView = findViewById(R.id.imgView);
 
         // Getting Permission to use GPS
@@ -131,7 +128,7 @@ public class CreateBountyActivity extends AppCompatActivity {
 
     private void createBounty() {
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try{
                 final Task location = fusedLocationProviderClient.getLastLocation();
@@ -143,7 +140,11 @@ public class CreateBountyActivity extends AppCompatActivity {
                             Location currentLocation = (Location) task.getResult();
 
                             Timestamp timestamp = new Timestamp(new Date());
-                            String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail() ;
+
+                            String userEmail = "";
+                            if (FirebaseAuth.getInstance().getCurrentUser().getEmail() != null) {
+                                userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail() ;
+                            }
 
                             Map<String, Object> bounty = new HashMap<>();
 
@@ -217,8 +218,8 @@ public class CreateBountyActivity extends AppCompatActivity {
         switch(requestCode){
             case LOCATION_PERMISSION_REQUEST_CODE:{
                 if(grantResults.length > 0){
-                    for(int i = 0; i < grantResults.length; i++){
-                        if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
+                    for (int grantResult : grantResults) {
+                        if (grantResult != PackageManager.PERMISSION_GRANTED) {
                             mLocationPermissionsGranted = false;
                             Log.d(TAG, "onRequestPermissionsResult: permission failed");
                             return;
@@ -241,4 +242,38 @@ public class CreateBountyActivity extends AppCompatActivity {
         return cameraHandlerInstance;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

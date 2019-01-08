@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -61,9 +62,14 @@ public class ListFragment extends Fragment {
             @Override
             public void onCallback(ArrayList<String> titles, ArrayList<String> locations, ArrayList<String> ids) {
                 RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+                recyclerView.setLayoutManager(layoutManager);
+                DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
+                recyclerView.addItemDecoration(divider);
                 ListAdapter adapter = new ListAdapter(ids, locations, titles, getContext());
                 recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
             }
         });
 
@@ -113,6 +119,35 @@ public class ListFragment extends Fragment {
             }
         });
         Log.d(TAG, "initRecyclerView: init");
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
