@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -50,27 +51,34 @@ public class CreateBountyActivity extends AppCompatActivity {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
 
-    private EditText etTitle, etHint;
+    private EditText etTitle, etHint, etWinMessage;
     private ImageView imgView;
-
+    private FloatingActionButton btnTakePhoto;
     private Boolean mLocationPermissionsGranted = false;
-
+    private Button btnCreateBounty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_create_bounty);
 
         // XML Linking
         etTitle = findViewById(R.id.etTitle);
         etHint = findViewById(R.id.etHint);
+        etWinMessage = findViewById(R.id.etWinMessage);
         // UI variables
-        FloatingActionButton btnTakePhoto = findViewById(R.id.btnTakePhoto);
-        Button btnCreateBounty = findViewById(R.id.btnCreateBounty);
+        btnTakePhoto = findViewById(R.id.btnTakePhoto);
+        btnCreateBounty = findViewById(R.id.btnCreateBounty);
         imgView = findViewById(R.id.imgView);
 
         // Getting Permission to use GPS
         getLocationPermission();
 
+
+        if (savedInstanceState != null) {
+            Bitmap bitmap = savedInstanceState.getParcelable("image");
+            imgView.setImageBitmap(bitmap);
+        }
         // onClick Events
 
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
@@ -83,10 +91,20 @@ public class CreateBountyActivity extends AppCompatActivity {
         btnCreateBounty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createBounty();
-            }
-        });
-    }
+                if (etTitle.getText() == null) {
+                    Toast.makeText(CreateBountyActivity.this, "Please enter a title.", Toast.LENGTH_SHORT).show();
+                } else if (etHint.getText() == null) {
+                    Toast.makeText(CreateBountyActivity.this, "Please enter a hint.", Toast.LENGTH_SHORT).show();
+                } else if (imgView.getDrawable() == null) {
+                    Toast.makeText(CreateBountyActivity.this, "Please add a photo.", Toast.LENGTH_SHORT).show();
+                } else if (etWinMessage.getText() == null) {
+                    Toast.makeText(CreateBountyActivity.this, "Please enter a win message.", Toast.LENGTH_SHORT).show();
+                } else {
+                    createBounty();
+                }
+                }
+            });
+        }
 
     public void takePhoto() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -154,27 +172,19 @@ public class CreateBountyActivity extends AppCompatActivity {
                             bounty.put("image", "/images/" + getCameraHandler().getImageFileName());
                             bounty.put("location", new GeoPoint(currentLocation.getLatitude(), currentLocation.getLongitude()));
                             bounty.put("title", etTitle.getText().toString());
+                            bounty.put("win_message", etWinMessage.getText().toString());
 
-                            if (getCameraHandler().getImageFileName() == null) {
-                                Toast.makeText(CreateBountyActivity.this, "Please take a picture.", Toast.LENGTH_SHORT).show();
-                            } else if (etTitle.getText().toString().matches("")) {
-                                Toast.makeText(CreateBountyActivity.this, "Please enter a title.", Toast.LENGTH_SHORT).show();
-                            } else if (etHint.getText().toString().matches("")) {
-                                Toast.makeText(CreateBountyActivity.this, "Please enter a hint.", Toast.LENGTH_SHORT).show();
-                            } else {
+                            imgView.setDrawingCacheEnabled(true);
+                            imgView.buildDrawingCache();
+                            Bitmap bitmap = ((BitmapDrawable)imgView.getDrawable()).getBitmap();
+                            String imageFileName = getCameraHandler().getImageFileName();
 
-                                imgView.setDrawingCacheEnabled(true);
-                                imgView.buildDrawingCache();
-                                Bitmap bitmap = ((BitmapDrawable) imgView.getDrawable()).getBitmap();
-                                String imageFileName = getCameraHandler().getImageFileName();
+                            FirebaseDAO firebaseDAO = new FirebaseDAO();
 
-                                FirebaseDAO firebaseDAO = new FirebaseDAO();
+                            firebaseDAO.saveBounty(bounty);
+                            firebaseDAO.uploadImage(bitmap, imageFileName);
+                            finish();
 
-                                firebaseDAO.saveBounty(bounty);
-                                firebaseDAO.uploadImage(bitmap, imageFileName);
-
-                                finish();
-                            }
 
                             Log.d(TAG, "onComplete: location = " + currentLocation.getLatitude() + " " + currentLocation.getLongitude());
                         }else{
@@ -259,6 +269,10 @@ public class CreateBountyActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        if (imgView.getDrawable() != null) {
+            Bitmap bitmap = ((BitmapDrawable)imgView.getDrawable()).getBitmap();
+            outState.putParcelable("image", bitmap);
+        }
         super.onSaveInstanceState(outState);
     }
 

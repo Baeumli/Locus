@@ -13,18 +13,21 @@ import android.widget.TextView;
 
 import com.locusapp.locus.R;
 import com.locusapp.locus.activities.app.BountyDetailActivity;
+import com.locusapp.locus.models.GeoHandler;
+import com.mapbox.mapboxsdk.geometry.LatLng;
+
 import java.util.ArrayList;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     private static final String TAG = "ListAdapter";
 
-    private ArrayList<String> locations = new ArrayList<>();
+    private ArrayList<LatLng> locations = new ArrayList<>();
     private ArrayList<String> titles = new ArrayList<>();
     private ArrayList<String> ids = new ArrayList<>();
     private Context context;
 
-    public ListAdapter(ArrayList<String> ids, ArrayList<String> locations, ArrayList<String> titles, Context context) {
+    public ListAdapter(ArrayList<String> ids, ArrayList<LatLng> locations, ArrayList<String> titles, Context context) {
         this.ids = ids;
         this.locations = locations;
         this.titles = titles;
@@ -43,7 +46,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called.");
         holder.lblTitle.setText(titles.get(position));
-        holder.lblLocation.setText(locations.get(position));
+
+        GeoHandler geoHandler = new GeoHandler();
+        String token = context.getString(R.string.access_token);
+
+        geoHandler.reverseGeocode(token, locations.get(position), new GeoHandler.GeoHandlerCallback() {
+            @Override
+            public void onCallback(String place) {
+                holder.lblLocation.setText(place);
+            }
+        });
+
+
 
         holder.listLayout.setOnClickListener(new View.OnClickListener() {
             @Override

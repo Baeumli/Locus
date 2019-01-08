@@ -16,4 +16,8 @@
 
     </style>
 
+    <style name="Toolbar" parent="Theme.AppCompat">
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
 </resources>

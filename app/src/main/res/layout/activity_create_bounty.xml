@@ -29,7 +29,7 @@
         <EditText
             android:id="@+id/etTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:autofillHints=""
             android:ems="10"
             android:inputType="text" />
@@ -43,21 +43,27 @@
         <EditText
             android:id="@+id/etHint"
             android:layout_width="match_parent"
-            android:layout_height="137dp"
+            android:layout_height="match_parent"
             android:ems="10"
             android:inputType="textMultiLine" />
 
         <TextView
-            android:id="@+id/lblImage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Image" />
+            android:layout_height="match_parent"
+            android:text="Win Message" />
+
+        <EditText
+            android:id="@+id/etWinMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:autofillHints=""
+            android:ems="10"
+            android:inputType="text" />
 
         <ImageView
             android:id="@+id/imgView"
             android:layout_width="200dp"
-            android:layout_height="200dp"
-            app:srcCompat="@android:color/transparent" />
+            android:layout_height="200dp" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btnTakePhoto"
@@ -65,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:clickable="true"
+            app:backgroundTint="@color/colorPrimary"
             app:srcCompat="@android:drawable/ic_menu_camera"
             tools:layout_editor_absoluteX="97dp"
             tools:layout_editor_absoluteY="31dp" />
@@ -75,8 +82,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Submit"
             android:backgroundTint="@color/colorPrimary"
+            android:text="Submit"
             android:textColor="#FFFFFF" />
 
     </LinearLayout>

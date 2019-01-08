@@ -18,6 +18,7 @@ public class BountyDetailActivity extends AppCompatActivity {
     private Button btnStartSearch;
 
     private double latitude, longitude;
+    private String winMessage;
     private String imagePath;
 
     @Override
@@ -36,11 +37,12 @@ public class BountyDetailActivity extends AppCompatActivity {
 
         firebaseDAO.getBountyDetails(id, new FirebaseDAO.FirebaseDetailCallback() {
             @Override
-            public void onCallback(String title, String hint, String creator, double lat, double lng, String image) {
+            public void onCallback(String title, String hint, String creator, double lat, double lng, String image, String message) {
 
                 latitude = lat;
                 longitude = lng;
                 imagePath = image;
+                winMessage = message;
 
                 lblTitle.setText(title);
                 lblHint.setText(hint);
@@ -57,6 +59,7 @@ public class BountyDetailActivity extends AppCompatActivity {
                     intent.putExtra("longitude", longitude);
                     intent.putExtra("latitude", latitude);
                     intent.putExtra("image", imagePath);
+                    intent.putExtra("message", winMessage);
                     startActivity(intent);
                     finish();
                 }

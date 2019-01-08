@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 
 import android.support.v7.widget.DividerItemDecoration;
@@ -21,6 +22,7 @@ import com.locusapp.locus.activities.app.CreateBountyActivity;
 import com.locusapp.locus.R;
 import com.locusapp.locus.adapters.ListAdapter;
 import com.locusapp.locus.models.FirebaseDAO;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class ListFragment extends Fragment {
 
     private static final String TAG = "ListFragment";
 
-    private Button btnCreateBounty;
+    private FloatingActionButton btnCreateBounty;
 
     public ListFragment() {
         // Required empty public constructor
@@ -60,7 +62,7 @@ public class ListFragment extends Fragment {
         firebaseDAO.getBountyList(new FirebaseDAO.FirebaseListCallback() {
 
             @Override
-            public void onCallback(ArrayList<String> titles, ArrayList<String> locations, ArrayList<String> ids) {
+            public void onCallback(ArrayList<String> titles, ArrayList<LatLng> locations, ArrayList<String> ids) {
                 RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

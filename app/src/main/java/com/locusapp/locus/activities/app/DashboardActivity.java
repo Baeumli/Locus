@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -27,18 +25,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.locusapp.locus.R;
 import com.locusapp.locus.activities.auth.LoginActivity;
-import com.locusapp.locus.fragments.AchievementsFragment;
 import com.locusapp.locus.fragments.ListFragment;
 import com.locusapp.locus.fragments.MapFragment;
 import com.locusapp.locus.fragments.DashboardFragment;
-import com.locusapp.locus.fragments.SettingsFragment;
 
 public class DashboardActivity extends AppCompatActivity implements
         DashboardFragment.OnFragmentInteractionListener,
         MapFragment.OnFragmentInteractionListener,
-        ListFragment.OnFragmentInteractionListener,
-        AchievementsFragment.OnFragmentInteractionListener,
-        SettingsFragment.OnFragmentInteractionListener {
+        ListFragment.OnFragmentInteractionListener
+        {
 
     private TextView mTextMessage;
     private FrameLayout fragmentContainer;
@@ -148,13 +143,8 @@ public class DashboardActivity extends AppCompatActivity implements
         drawerNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                Fragment f = null;
                 int itemId = menuItem.getItemId();
-                if (itemId == R.id.achievements) {
-                    f = new AchievementsFragment();
-                } else if (itemId == R.id.settings) {
-                    f = new SettingsFragment();
-                } else if (itemId == R.id.logout) {
+                if (itemId == R.id.logout) {
                     FirebaseAuth.getInstance().signOut();
 
                     mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -170,13 +160,6 @@ public class DashboardActivity extends AppCompatActivity implements
                     return true;
                 }
 
-                if (f != null) {
-                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, f);
-                    transaction.commit();
-                    drawerLayout.closeDrawers();
-                    return true;
-                }
                 return false;
             }
         });

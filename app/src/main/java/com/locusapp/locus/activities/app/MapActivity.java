@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
@@ -25,12 +26,19 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.locusapp.locus.R;
 import com.locusapp.locus.models.GeofenceTransitionsIntentService;
 import com.mapbox.mapboxsdk.Mapbox;
-import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.annotations.PolylineOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.location.LocationComponent;
+import com.mapbox.mapboxsdk.location.modes.CameraMode;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+
+import java.util.ArrayList;
+
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 public class MapActivity extends AppCompatActivity {
 
@@ -92,13 +100,25 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
                 // Do stuff with the map
-                mapboxMap.addMarker(new MarkerOptions()
-                .position(new LatLng(lat, lng)));
+                int color = Color.parseColor("#3D348B");
+                drawCircle(mapboxMap, new LatLng(lat, lng), color, 1000);
 
                 mapboxMap.setCameraPosition(new CameraPosition.Builder()
                 .target(new LatLng(lat, lng))
                 .zoom(10.0)
                 .build());
+
+                LocationComponent locationComponent = mapboxMap.getLocationComponent();
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                                != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+
+                locationComponent.activateLocationComponent(getApplicationContext());
+                locationComponent.setCameraMode(CameraMode.TRACKING_COMPASS);
+                locationComponent.setLocationComponentEnabled(true);
             }
         });
     }
@@ -136,6 +156,7 @@ public class MapActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             Intent winIntent = new Intent(mapActivity.getApplicationContext(), WinActivity.class);
             winIntent.putExtra("image", mapActivity.getIntent().getStringExtra("image"));
+            winIntent.putExtra("message", mapActivity.getIntent().getStringExtra("message"));
             mapActivity.startActivity(winIntent);
             mapActivity.finish();
         }
@@ -177,6 +198,39 @@ public class MapActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mapView.onPause();
+    }
+
+    public static void drawCircle(MapboxMap map, LatLng position, int color, double radiusMeters) {
+        PolylineOptions polylineOptions = new PolylineOptions();
+        polylineOptions.color(color);
+        polylineOptions.width(0.5f); // change the line width here
+        polylineOptions.addAll(getCirclePoints(position, radiusMeters));
+        map.addPolyline(polylineOptions);
+    }
+
+    private static ArrayList<LatLng> getCirclePoints(LatLng position, double radius) {
+        int degreesBetweenPoints = 10; // change here for shape
+        int numberOfPoints = (int) Math.floor(360 / degreesBetweenPoints);
+        double distRadians = radius / 6371000.0; // earth radius in meters
+        double centerLatRadians = position.getLatitude() * Math.PI / 180;
+        double centerLonRadians = position.getLongitude() * Math.PI / 180;
+        ArrayList<LatLng> polygons = new ArrayList<>(); // array to hold all the points
+        for (int index = 0; index < numberOfPoints; index++) {
+            double degrees = index * degreesBetweenPoints;
+            double degreeRadians = degrees * Math.PI / 180;
+            double pointLatRadians = Math.asin(sin(centerLatRadians) * cos(distRadians)
+                    + cos(centerLatRadians) * sin(distRadians) * cos(degreeRadians));
+            double pointLonRadians = centerLonRadians + Math.atan2(sin(degreeRadians)
+                            * sin(distRadians) * cos(centerLatRadians),
+                    cos(distRadians) - sin(centerLatRadians) * sin(pointLatRadians));
+            double pointLat = pointLatRadians * 180 / Math.PI;
+            double pointLon = pointLonRadians * 180 / Math.PI;
+            LatLng point = new LatLng(pointLat, pointLon);
+            polygons.add(point);
+        }
+        // add first point at end to close circle
+        polygons.add(polygons.get(0));
+        return polygons;
     }
 
 }

@@ -20,7 +20,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
 import java.io.ByteArrayOutputStream;
@@ -96,8 +95,9 @@ public class FirebaseDAO {
                             double lat = document.getGeoPoint("location").getLatitude();
                             double lng = document.getGeoPoint("location").getLongitude();
                             String image = document.getString("image");
+                            String message = document.getString("win_message");
 
-                            firebaseCallback.onCallback(title, hint, creator, lat, lng, image);
+                            firebaseCallback.onCallback(title, hint, creator, lat, lng, image, message);
 
                         }
                     }
@@ -117,7 +117,7 @@ public class FirebaseDAO {
                         }
 
                         ArrayList<String> titles = new ArrayList<>();
-                        ArrayList<String> locations = new ArrayList<>();
+                        ArrayList<LatLng> locations = new ArrayList<>();
                         ArrayList<String> ids = new ArrayList<>();
 
                         titles.clear();
@@ -126,7 +126,10 @@ public class FirebaseDAO {
 
                         for (QueryDocumentSnapshot document : querySnapshot) {
                             titles.add(document.getString("title"));
-                            locations.add(document.get("location").toString());
+                            locations.add(new LatLng(
+                                    document.getGeoPoint("location").getLatitude(),
+                                    document.getGeoPoint("location").getLongitude()
+                            ));
                             ids.add(document.getId());
                         }
 
@@ -167,11 +170,11 @@ public class FirebaseDAO {
 
 
     public interface FirebaseDetailCallback {
-        void onCallback(String title, String hint, String creator, double lat, double lng, String image);
+        void onCallback(String title, String hint, String creator, double lat, double lng, String image, String message);
     }
 
     public interface FirebaseListCallback {
-        void onCallback(ArrayList<String> titles, ArrayList<String> locations, ArrayList<String> ids);
+        void onCallback(ArrayList<String> titles, ArrayList<LatLng> locations, ArrayList<String> ids);
     }
 
     public interface FirebaseLatLngCallback {

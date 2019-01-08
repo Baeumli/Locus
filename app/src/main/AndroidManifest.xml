@@ -39,7 +39,7 @@
         <activity android:name=".activities.auth.RegisterActivity" />
         <activity
             android:name=".activities.app.DashboardActivity"
-            android:label="@string/title_activity_dashboard" />
+            android:label="Locus" />
         <activity android:name=".activities.app.MapActivity" />
         <activity android:name=".activities.app.CreateBountyActivity" />
         <activity android:name=".activities.app.BountyDetailActivity" />
