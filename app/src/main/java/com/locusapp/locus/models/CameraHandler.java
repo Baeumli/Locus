@@ -1,15 +1,11 @@
 package com.locusapp.locus.models;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.media.ExifInterface;
-import android.support.v4.content.FileProvider;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -18,6 +14,8 @@ import java.io.IOException;
 import java.util.Calendar;
 
 public class CameraHandler {
+
+    // Methods for rotating image taken from https://www.youtube.com/watch?v=mZbL2ofcdP0
 
     private String mCurrentPhotoPath, imageFileName;
 
@@ -41,7 +39,6 @@ public class CameraHandler {
         bitmap = rotateImage(bitmap);
 
         return bitmap;
-
     }
 
     public Bitmap rotateImage(Bitmap bitmap) {
@@ -85,7 +82,6 @@ public class CameraHandler {
         );
 
         mCurrentPhotoPath = image.getAbsolutePath();
-
         return image;
     }
 

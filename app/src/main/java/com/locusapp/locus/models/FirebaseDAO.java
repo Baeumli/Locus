@@ -2,8 +2,6 @@ package com.locusapp.locus.models;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -98,7 +96,6 @@ public class FirebaseDAO {
                             String message = document.getString("win_message");
 
                             firebaseCallback.onCallback(title, hint, creator, lat, lng, image, message);
-
                         }
                     }
                 });
@@ -132,9 +129,7 @@ public class FirebaseDAO {
                             ));
                             ids.add(document.getId());
                         }
-
                         firebaseCallback.onCallback(titles, locations, ids);
-
                     }
                 });
     }
@@ -167,7 +162,6 @@ public class FirebaseDAO {
                     }
                 });
     }
-
 
     public interface FirebaseDetailCallback {
         void onCallback(String title, String hint, String creator, double lat, double lng, String image, String message);

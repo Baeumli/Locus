@@ -38,5 +38,4 @@ public class GeofenceErrorMessages {
                 return mResources.getString(R.string.geofence_error_unknown);
         }
     }
-
 }

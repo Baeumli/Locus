@@ -70,6 +70,7 @@ public class MapActivity extends AppCompatActivity {
                 .setRequestId("1")
                 // lat, long, radius
                 .setCircularRegion(lat, lng, 100)
+
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
                 .build();
@@ -99,7 +100,6 @@ public class MapActivity extends AppCompatActivity {
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
-                // Do stuff with the map
                 int color = Color.parseColor("#3D348B");
                 drawCircle(mapboxMap, new LatLng(lat, lng), color, 1000);
 
@@ -131,13 +131,10 @@ public class MapActivity extends AppCompatActivity {
     }
 
     private PendingIntent getGeofencePendingIntent() {
-        // Reuse the PendingIntent if we already have it.
         if (pendingIntent != null) {
             return pendingIntent;
         }
         Intent intent = new Intent(this, GeofenceTransitionsIntentService.class);
-        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when
-        // calling addGeofences() and removeGeofences().
         pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.
                 FLAG_UPDATE_CURRENT);
         return pendingIntent;
@@ -171,8 +168,6 @@ public class MapActivity extends AppCompatActivity {
                             Log.e(TAG, "onFailure: Couldn't delete Geofence", e);
                         }
                     });
-
-
             mapActivity.finish();
         }
     }
@@ -214,6 +209,8 @@ public class MapActivity extends AppCompatActivity {
         super.onPause();
         mapView.onPause();
     }
+
+    // Taken from https://stackoverflow.com/a/46702165
 
     public static void drawCircle(MapboxMap map, LatLng position, int color, double radiusMeters) {
         PolylineOptions polylineOptions = new PolylineOptions();

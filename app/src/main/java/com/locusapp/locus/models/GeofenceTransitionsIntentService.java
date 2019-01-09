@@ -3,18 +3,14 @@ package com.locusapp.locus.models;
 import android.app.IntentService;
 import android.content.Intent;
 
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.locusapp.locus.R;
-import com.locusapp.locus.activities.app.DashboardActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +29,6 @@ public class GeofenceTransitionsIntentService extends IntentService {
     public GeofenceTransitionsIntentService() {
         // Use the TAG to name the worker thread.
         super(TAG);
-
     }
 
     /**
@@ -100,8 +95,6 @@ public class GeofenceTransitionsIntentService extends IntentService {
         ArrayList<String> triggeringGeofencesIdsList = new ArrayList<>();
         for (Geofence geofence : triggeringGeofences) {
             triggeringGeofencesIdsList.add(geofence.getRequestId());
-
-
         }
         String triggeringGeofencesIdsString = TextUtils.join(", ",  triggeringGeofencesIdsList);
 
@@ -124,6 +117,4 @@ public class GeofenceTransitionsIntentService extends IntentService {
                 return getString(R.string.unknown_geofence_transition);
         }
     }
-
-
 }

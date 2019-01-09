@@ -31,7 +31,6 @@ public class GeoHandler {
                 } else {
                     geoHandlerCallback.onCallback("N/A");
                 }
-
             }
 
             @Override

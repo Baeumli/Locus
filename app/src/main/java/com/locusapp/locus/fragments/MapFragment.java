@@ -52,7 +52,7 @@ public class MapFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // UI elements of fragments must be set in onViewCreated() !!!
+        // UI elements of fragments must be set in onViewCreated()
         mapView = view.findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new OnMapReadyCallback() {
@@ -61,26 +61,26 @@ public class MapFragment extends Fragment {
 
                 FirebaseDAO firebaseDAO = new FirebaseDAO();
                 firebaseDAO.getLatLng(new FirebaseDAO.FirebaseLatLngCallback() {
-                                          @Override
-                                          public void onCallback(ArrayList<LatLng> locations, ArrayList<String> titles) {
 
-                                              GeoHandler geoHandler = new GeoHandler();
-
-
-                                              for (int i = 0; i < locations.size(); i++) {
-                                                  mapboxMap.addMarker(new MarkerOptions()
-                                                          .position(locations.get(i))
-                                                          .title(titles.get(i)));
-                                              }
+                    @Override
+                    public void onCallback(ArrayList<LatLng> locations, ArrayList<String> titles) {
+                        GeoHandler geoHandler = new GeoHandler();
+                        for (int i = 0; i < locations.size(); i++) {
+                            mapboxMap.addMarker(new MarkerOptions()
+                                    .position(locations.get(i))
+                                    .title(titles.get(i)));
+                        }
 
                         LocationComponent locationComponent = mapboxMap.getLocationComponent();
-                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                                != PackageManager.PERMISSION_GRANTED &&
+                                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                                        != PackageManager.PERMISSION_GRANTED) {
                             return;
                         }
                         locationComponent.activateLocationComponent(getContext());
                         locationComponent.setCameraMode(CameraMode.TRACKING_COMPASS);
                         locationComponent.setLocationComponentEnabled(true);
-
                     }
                 });
             }
@@ -150,7 +150,6 @@ public class MapFragment extends Fragment {
         super.onLowMemory();
         mapView.onLowMemory();
     }
-
 
     @Override
     public void onDestroyView() {

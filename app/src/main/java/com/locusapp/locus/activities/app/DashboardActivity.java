@@ -56,7 +56,6 @@ public class DashboardActivity extends AppCompatActivity implements
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
     }
 
     @Override
@@ -88,11 +87,9 @@ public class DashboardActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch(itemId) {
-            // Android home
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            // manage other entries if you have it ...
         }
         return true;
     }
@@ -104,7 +101,6 @@ public class DashboardActivity extends AppCompatActivity implements
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
@@ -153,7 +149,6 @@ public class DashboardActivity extends AppCompatActivity implements
                     drawerLayout.closeDrawers();
                     return true;
                 }
-
                 return false;
             }
         });

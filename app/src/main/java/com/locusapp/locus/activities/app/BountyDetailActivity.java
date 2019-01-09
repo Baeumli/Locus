@@ -10,8 +10,6 @@ import android.widget.TextView;
 import com.locusapp.locus.R;
 import com.locusapp.locus.models.FirebaseDAO;
 
-import java.util.ArrayList;
-
 public class BountyDetailActivity extends AppCompatActivity {
 
     private TextView lblTitle, lblHint, lblCreator;
@@ -48,7 +46,6 @@ public class BountyDetailActivity extends AppCompatActivity {
                 lblHint.setText(hint);
                 lblCreator.setText(creator);
             }
-
         });
 
         btnStartSearch.setOnClickListener(new View.OnClickListener() {
