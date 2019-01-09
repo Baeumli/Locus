@@ -39,10 +39,13 @@
         <activity android:name=".activities.auth.RegisterActivity" />
         <activity
             android:name=".activities.app.DashboardActivity"
-            android:label="Locus" />
-        <activity android:name=".activities.app.MapActivity" />
+            android:label="Locus"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".activities.app.MapActivity"
+            android:configChanges="orientation|screenSize"/>
         <activity android:name=".activities.app.CreateBountyActivity" />
-        <activity android:name=".activities.app.BountyDetailActivity" />
+        <activity android:name=".activities.app.BountyDetailActivity"
+            android:configChanges="orientation|screenSize"/>
 
         <service android:name=".models.GeofenceTransitionsIntentService" />
 

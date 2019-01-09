@@ -233,4 +233,20 @@ public class MapActivity extends AppCompatActivity {
         return polygons;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        geofencingClient.removeGeofences(getGeofencePendingIntent()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.i(TAG, "onSuccess: Deleted Geofence!");
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "onFailure: Couldn't delete Geofence", e);
+            }
+        });
+    }
 }

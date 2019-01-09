@@ -24,9 +24,14 @@ public class GeoHandler {
         client.enqueue(new retrofit.Callback<GeocoderResponse>() {
             @Override
             public void onResponse(Response<GeocoderResponse> response, Retrofit retrofit) {
-                String place = response.body().getFeatures().get(0).getText();
-                geoHandlerCallback.onCallback(place);
-                Log.i(TAG, "onResponse: Successfully aquired reverse geocode location");
+                if (response.body().getFeatures().size() > 0 && response.body().getFeatures() != null) {
+                    String place = response.body().getFeatures().get(0).getText();
+                    geoHandlerCallback.onCallback(place);
+                    Log.i(TAG, "onResponse: Successfully aquired reverse geocode location");
+                } else {
+                    geoHandlerCallback.onCallback("N/A");
+                }
+
             }
 
             @Override

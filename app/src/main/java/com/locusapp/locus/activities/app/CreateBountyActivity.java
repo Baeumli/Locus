@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -157,8 +156,6 @@ public class CreateBountyActivity extends AppCompatActivity {
                             Log.d(TAG, "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
 
-                            Timestamp timestamp = new Timestamp(new Date());
-
                             String userEmail = "";
                             if (FirebaseAuth.getInstance().getCurrentUser().getEmail() != null) {
                                 userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail() ;
@@ -166,7 +163,6 @@ public class CreateBountyActivity extends AppCompatActivity {
 
                             Map<String, Object> bounty = new HashMap<>();
 
-                            bounty.put("created_at", timestamp);
                             bounty.put("creator", userEmail);
                             bounty.put("hint", etHint.getText().toString());
                             bounty.put("image", "/images/" + getCameraHandler().getImageFileName());
@@ -184,7 +180,6 @@ public class CreateBountyActivity extends AppCompatActivity {
                             firebaseDAO.saveBounty(bounty);
                             firebaseDAO.uploadImage(bitmap, imageFileName);
                             finish();
-
 
                             Log.d(TAG, "onComplete: location = " + currentLocation.getLatitude() + " " + currentLocation.getLongitude());
                         }else{
