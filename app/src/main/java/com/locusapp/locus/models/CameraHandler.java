@@ -15,6 +15,8 @@ import java.util.Calendar;
 
 public class CameraHandler {
 
+    private static CameraHandler cameraHandlerInstance = null;
+
     // Methods for rotating image taken from https://www.youtube.com/watch?v=mZbL2ofcdP0
 
     private String mCurrentPhotoPath, imageFileName;
@@ -99,5 +101,12 @@ public class CameraHandler {
 
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
+    }
+
+    public static CameraHandler getCameraHandler() {
+        if (cameraHandlerInstance == null) {
+            cameraHandlerInstance = new CameraHandler();
+        }
+        return cameraHandlerInstance;
     }
 }

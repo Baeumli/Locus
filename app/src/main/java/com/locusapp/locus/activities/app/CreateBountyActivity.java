@@ -14,6 +14,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,7 +39,7 @@ import java.util.Map;
 
 public class CreateBountyActivity extends AppCompatActivity {
 
-    private static CameraHandler cameraHandlerInstance = null;
+
 
     private final String TAG = "BountyListActivity";
 
@@ -53,6 +54,8 @@ public class CreateBountyActivity extends AppCompatActivity {
     private FloatingActionButton btnTakePhoto;
     private Boolean mLocationPermissionsGranted = false;
     private Button btnCreateBounty;
+    private LruCache<String, Bitmap> mMemoryCache;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,16 +71,15 @@ public class CreateBountyActivity extends AppCompatActivity {
         btnCreateBounty = findViewById(R.id.btnCreateBounty);
         imgView = findViewById(R.id.imgView);
 
-        // Getting Permission to use GPS
+        // Get Permission to use GPS
         getLocationPermission();
-
 
         if (savedInstanceState != null) {
             Bitmap bitmap = savedInstanceState.getParcelable("image");
             imgView.setImageBitmap(bitmap);
         }
-        // onClick Events
 
+        // onClick Events
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,16 +101,16 @@ public class CreateBountyActivity extends AppCompatActivity {
                 } else {
                     createBounty();
                 }
-                }
-            });
-        }
+            }
+        });
+    }
 
     public void takePhoto() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = null;
             try {
-                photoFile = getCameraHandler().createImageFile(this);
+                photoFile = CameraHandler.getCameraHandler().createImageFile(this);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -129,11 +131,9 @@ public class CreateBountyActivity extends AppCompatActivity {
                 int width = imgView.getWidth();
                 int height = imgView.getHeight();
 
-                Bitmap bitmap = getCameraHandler().setPic(width, height);
+                Bitmap bitmap = CameraHandler.getCameraHandler().setPic(width, height);
 
-                Bitmap rotatedBitmap = getCameraHandler().rotateImage(bitmap);
-
-                imgView.setImageBitmap(rotatedBitmap);
+                imgView.setImageBitmap(bitmap);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -163,7 +163,7 @@ public class CreateBountyActivity extends AppCompatActivity {
 
                             bounty.put("creator", userEmail);
                             bounty.put("hint", etHint.getText().toString());
-                            bounty.put("image", "/images/" + getCameraHandler().getImageFileName());
+                            bounty.put("image", "/images/" + CameraHandler.getCameraHandler().getImageFileName());
                             bounty.put("location", new GeoPoint(currentLocation.getLatitude(), currentLocation.getLongitude()));
                             bounty.put("title", etTitle.getText().toString());
                             bounty.put("win_message", etWinMessage.getText().toString());
@@ -171,7 +171,7 @@ public class CreateBountyActivity extends AppCompatActivity {
                             imgView.setDrawingCacheEnabled(true);
                             imgView.buildDrawingCache();
                             Bitmap bitmap = ((BitmapDrawable)imgView.getDrawable()).getBitmap();
-                            String imageFileName = getCameraHandler().getImageFileName();
+                            String imageFileName = CameraHandler.getCameraHandler().getImageFileName();
 
                             FirebaseDAO firebaseDAO = new FirebaseDAO();
 
@@ -237,13 +237,6 @@ public class CreateBountyActivity extends AppCompatActivity {
 
     // Singleton for Camera Stuff
 
-    public static CameraHandler getCameraHandler() {
-        if (cameraHandlerInstance == null) {
-            cameraHandlerInstance = new CameraHandler();
-        }
-        return cameraHandlerInstance;
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -282,4 +275,5 @@ public class CreateBountyActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
     }
+
 }
