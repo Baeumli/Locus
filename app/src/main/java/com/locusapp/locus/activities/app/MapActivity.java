@@ -158,6 +158,21 @@ public class MapActivity extends AppCompatActivity {
             winIntent.putExtra("image", mapActivity.getIntent().getStringExtra("image"));
             winIntent.putExtra("message", mapActivity.getIntent().getStringExtra("message"));
             mapActivity.startActivity(winIntent);
+
+            mapActivity.geofencingClient.removeGeofences(mapActivity.getGeofencePendingIntent()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.i(TAG, "onSuccess: Deleted Geofence!");
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e(TAG, "onFailure: Couldn't delete Geofence", e);
+                        }
+                    });
+
+
             mapActivity.finish();
         }
     }

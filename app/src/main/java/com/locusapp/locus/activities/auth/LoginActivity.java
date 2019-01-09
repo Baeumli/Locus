@@ -85,12 +85,14 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                email = etEmail.getText().toString();
-                password = etPassword.getText().toString();
 
-                if (etEmail.getText().toString() == null ||
-                        etPassword.getText().toString() == null) {
+                if (etEmail.getText().toString().matches("")) {
+                    Toast.makeText(LoginActivity.this, "Please enter an Email-Address", Toast.LENGTH_SHORT).show();
+                } else if (etPassword.getText().toString().matches("")) {
+                    Toast.makeText(LoginActivity.this, "Please enter a Password", Toast.LENGTH_SHORT).show();
                 } else {
+                    email = etEmail.getText().toString();
+                    password = etPassword.getText().toString();
                     firebaseAuthWithEmailAndPassword(email, password);
                 }
             }

@@ -151,9 +151,10 @@ public class MapFragment extends Fragment {
         mapView.onLowMemory();
     }
 
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         mapView.onDestroy();
     }
 }

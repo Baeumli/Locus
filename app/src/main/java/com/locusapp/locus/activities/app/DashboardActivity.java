@@ -38,16 +38,12 @@ public class DashboardActivity extends AppCompatActivity implements
     private TextView mTextMessage;
     private FrameLayout fragmentContainer;
     private DrawerLayout drawerLayout;
-    private DashboardFragment dashboardFragment;
     private MapFragment mapFragment;
     private ListFragment listFragment;
     private GoogleSignInClient mGoogleSignInClient;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
                 switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        switchToHomeFragment();
-                        return true;
                     case R.id.navigation_bounty:
                         switchToListFragment();
                         return true;
@@ -75,16 +71,16 @@ public class DashboardActivity extends AppCompatActivity implements
         configureToolbar();
         configureNavigationDrawer();
 
-        dashboardFragment = new DashboardFragment();
         mapFragment = new MapFragment();
         listFragment =  new ListFragment();
 
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction()
-                .add(R.id.fragment_container, dashboardFragment)
                 .add(R.id.fragment_container, mapFragment).hide(mapFragment)
+                .addToBackStack(null)
                 .add(R.id.fragment_container, listFragment).hide(listFragment)
-                .show(dashboardFragment)
+                .addToBackStack(null)
+                .show(listFragment)
                 .commit();
     }
 
@@ -112,20 +108,14 @@ public class DashboardActivity extends AppCompatActivity implements
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-
-    public void switchToHomeFragment() {
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().hide(mapFragment).hide(listFragment).show(dashboardFragment).commit();
-    }
-
     public void switchToMapFragment() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().hide(dashboardFragment).hide(listFragment).show(mapFragment).commit();
+        manager.beginTransaction().hide(listFragment).show(mapFragment).commit();
     }
 
     public void switchToListFragment() {
         FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().hide(dashboardFragment).hide(mapFragment).show(listFragment).commit();
+        manager.beginTransaction().hide(mapFragment).show(listFragment).commit();
     }
 
     private void configureToolbar() {
@@ -136,7 +126,12 @@ public class DashboardActivity extends AppCompatActivity implements
         actionbar.setDisplayHomeAsUpEnabled(true);
     }
 
-    private void configureNavigationDrawer() {
+            @Override
+            public void onBackPressed() {
+                finish();
+            }
+
+            private void configureNavigationDrawer() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView drawerNav = (NavigationView) findViewById(R.id.drawer_navigation);
         drawerNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

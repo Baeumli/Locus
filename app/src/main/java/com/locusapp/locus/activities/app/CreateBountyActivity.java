@@ -90,13 +90,13 @@ public class CreateBountyActivity extends AppCompatActivity {
         btnCreateBounty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etTitle.getText() == null) {
+                if (etTitle.getText().toString().matches("")) {
                     Toast.makeText(CreateBountyActivity.this, "Please enter a title.", Toast.LENGTH_SHORT).show();
-                } else if (etHint.getText() == null) {
+                } else if (etHint.getText().toString().matches("")) {
                     Toast.makeText(CreateBountyActivity.this, "Please enter a hint.", Toast.LENGTH_SHORT).show();
                 } else if (imgView.getDrawable() == null) {
                     Toast.makeText(CreateBountyActivity.this, "Please add a photo.", Toast.LENGTH_SHORT).show();
-                } else if (etWinMessage.getText() == null) {
+                } else if (etWinMessage.getText().toString().matches("")) {
                     Toast.makeText(CreateBountyActivity.this, "Please enter a win message.", Toast.LENGTH_SHORT).show();
                 } else {
                     createBounty();

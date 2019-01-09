@@ -54,18 +54,21 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                email = etEmail.getText().toString();
-                if (etPassword.getText().toString().equals(etPasswordCheck.getText().toString()) ) {
-                    password = etPassword.getText().toString();
+
+                if (etEmail.getText().toString().matches("")) {
+                    Toast.makeText(RegisterActivity.this, "Please enter an Email-Address", Toast.LENGTH_SHORT).show();
+                } else if (etPassword.getText().toString().matches("")) {
+                    Toast.makeText(RegisterActivity.this, "Please enter a Password", Toast.LENGTH_SHORT).show();
+                } else if (etPasswordCheck.getText().toString().matches("")) {
+                    Toast.makeText(RegisterActivity.this, "Please re-enter your Password", Toast.LENGTH_SHORT).show();
                 } else {
-                    System.out.println("passwords don't match");
-                }
-                if (etEmail.getText().toString().equals("")||
-                        etPassword.getText().toString().equals("") ||
-                        etPasswordCheck.getText().toString().equals("")) {
-                    System.out.println("empty fields");
-                } else {
-                    firebaseCreateUserWithEmailAndPassword(email, password);
+                    if (etPassword.getText().toString().matches(etPasswordCheck.getText().toString()) ) {
+                        email = etEmail.getText().toString();
+                        password = etPassword.getText().toString();
+                        firebaseCreateUserWithEmailAndPassword(email, password);
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Passwords don't match", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

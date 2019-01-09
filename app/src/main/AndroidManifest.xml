@@ -41,15 +41,17 @@
             android:name=".activities.app.DashboardActivity"
             android:label="Locus"
             android:configChanges="orientation|screenSize"/>
-        <activity android:name=".activities.app.MapActivity"
-            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".activities.app.MapActivity" />
         <activity android:name=".activities.app.CreateBountyActivity" />
         <activity android:name=".activities.app.BountyDetailActivity"
             android:configChanges="orientation|screenSize"/>
 
         <service android:name=".models.GeofenceTransitionsIntentService" />
 
-        <activity android:name=".activities.app.WinActivity"></activity>
+        <activity android:name=".activities.app.WinActivity"
+            android:noHistory="true"
+            android:launchMode="singleInstance">
+        </activity>
     </application>
 
 </manifest>
