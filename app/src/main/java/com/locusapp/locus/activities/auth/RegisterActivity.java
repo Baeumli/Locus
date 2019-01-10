@@ -22,8 +22,6 @@ import com.locusapp.locus.activities.app.DashboardActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextView lblCreateAccount;
-    private Button btnRegister;
     private FirebaseAuth mAuth;
     private String TAG = "RegisterActivity";
     private EditText etEmail, etPassword, etPasswordCheck;
@@ -36,8 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        lblCreateAccount = findViewById(R.id.lblCreateAccount);
-        btnRegister = findViewById(R.id.btnRegister);
+        TextView lblCreateAccount = findViewById(R.id.lblCreateAccount);
+        Button btnRegister = findViewById(R.id.btnRegister);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         etPasswordCheck = findViewById(R.id.etPasswordCheck);

@@ -48,25 +48,18 @@ public class GeofenceTransitionsIntentService extends IntentService {
         }
 
         // Get the transition type.
-        Log.d(TAG, "onHandleIntent: Getting Transition Type");
         int geofenceTransition = geofencingEvent.getGeofenceTransition();
 
-        Log.d(TAG, "onHandleIntent: Testing transition");
         // Test that the reported transition was of interest.
         if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
                 geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
 
-            Log.d(TAG, "onHandleIntent: Triggered Geofence!");
             // Get the geofences that were triggered. A single event can trigger multiple geofences.
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
 
-            Log.d(TAG, "onHandleIntent: Getting Details...");
             // Get the transition details as a String.
             String geofenceTransitionDetails = getGeofenceTransitionDetails(geofenceTransition,
                     triggeringGeofences);
-
-            Log.d(TAG, "onHandleIntent: PRINTING");
-            Log.i(TAG, geofenceTransitionDetails);
 
             Intent broadcastIntent = new Intent("geofence");
             LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
@@ -96,9 +89,7 @@ public class GeofenceTransitionsIntentService extends IntentService {
         for (Geofence geofence : triggeringGeofences) {
             triggeringGeofencesIdsList.add(geofence.getRequestId());
         }
-        String triggeringGeofencesIdsString = TextUtils.join(", ",  triggeringGeofencesIdsList);
-
-        return triggeringGeofencesIdsString;
+        return TextUtils.join(", ",  triggeringGeofencesIdsList);
     }
 
     /**

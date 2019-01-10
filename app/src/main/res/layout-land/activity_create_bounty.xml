@@ -23,8 +23,7 @@
         <ImageView
             android:id="@+id/imgView"
             android:layout_width="200dp"
-            android:layout_height="200dp"
-            />
+            android:layout_height="200dp" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btnTakePhoto"
@@ -34,11 +33,11 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
+            android:focusable="true"
             app:backgroundTint="@color/colorPrimary"
             app:srcCompat="@android:drawable/ic_menu_camera"
             tools:layout_editor_absoluteX="97dp"
-            tools:layout_editor_absoluteY="31dp"
-            android:focusable="true" />
+            tools:layout_editor_absoluteY="31dp" />
     </LinearLayout>
 
     <LinearLayout

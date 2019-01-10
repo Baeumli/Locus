@@ -63,9 +63,9 @@ public class DashboardActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+        mTextMessage = findViewById(R.id.message);
         fragmentContainer = findViewById(R.id.fragment_container);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         configureToolbar();
         configureNavigationDrawer();
@@ -115,11 +115,13 @@ public class DashboardActivity extends AppCompatActivity implements
     }
 
     private void configureToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_action_menu_drawer);
-        actionbar.setDisplayHomeAsUpEnabled(true);
+        if (actionbar != null) {
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_action_menu_drawer);
+            actionbar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
             @Override
@@ -128,11 +130,11 @@ public class DashboardActivity extends AppCompatActivity implements
             }
 
             private void configureNavigationDrawer() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView drawerNav = (NavigationView) findViewById(R.id.drawer_navigation);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView drawerNav = findViewById(R.id.drawer_navigation);
         drawerNav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.logout) {
                     FirebaseAuth.getInstance().signOut();

@@ -47,13 +47,12 @@ public class MapActivity extends AppCompatActivity {
     private Geofence geofence;
     private PendingIntent pendingIntent;
     private static final String TAG = "MapActivity";
-    private static ConstraintLayout constraintLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        constraintLayout = findViewById(R.id.constraintLayout);
+        ConstraintLayout constraintLayout = findViewById(R.id.constraintLayout);
 
         LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
         GeoReceiver geoReceiver = new GeoReceiver(this);
@@ -94,7 +93,7 @@ public class MapActivity extends AppCompatActivity {
                     });
         }
 
-        mapView = (MapView) findViewById(R.id.mapView);
+        mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
         mapView.getMapAsync(new OnMapReadyCallback() {
@@ -152,6 +151,7 @@ public class MapActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             Intent winIntent = new Intent(mapActivity.getApplicationContext(), WinActivity.class);
+            winIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             winIntent.putExtra("image", mapActivity.getIntent().getStringExtra("image"));
             winIntent.putExtra("message", mapActivity.getIntent().getStringExtra("message"));
             mapActivity.startActivity(winIntent);

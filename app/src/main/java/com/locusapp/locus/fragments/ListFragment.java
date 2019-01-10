@@ -32,8 +32,6 @@ public class ListFragment extends Fragment {
 
     private static final String TAG = "ListFragment";
 
-    private FloatingActionButton btnCreateBounty;
-
     public ListFragment() {
         // Required empty public constructor
     }
@@ -46,11 +44,10 @@ public class ListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
@@ -77,7 +74,6 @@ public class ListFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -102,7 +98,6 @@ public class ListFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
@@ -111,7 +106,7 @@ public class ListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btnCreateBounty = getView().findViewById(R.id.btnCreateBounty);
+        FloatingActionButton btnCreateBounty = getView().findViewById(R.id.btnCreateBounty);
         btnCreateBounty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +114,6 @@ public class ListFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        Log.d(TAG, "initRecyclerView: init");
     }
 
     @Override

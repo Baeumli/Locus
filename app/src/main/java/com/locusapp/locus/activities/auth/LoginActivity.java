@@ -29,11 +29,8 @@ import com.locusapp.locus.activities.app.DashboardActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView lblCreateAccount;
     private EditText etEmail, etPassword;
-    private Button btnLogin;
     private GoogleSignInClient mGoogleSignInClient;
-    private SignInButton btnSignInGoogle;
     private int RC_SIGN_IN = 1;
     private String TAG = "LoginActivity";
     private String email, password;
@@ -45,11 +42,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        lblCreateAccount = findViewById(R.id.lblCreateAccount);
+        TextView lblCreateAccount = findViewById(R.id.lblCreateAccount);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnSignInGoogle = findViewById(R.id.btnSignInGoogle);
+        Button btnLogin = findViewById(R.id.btnLogin);
+        SignInButton btnSignInGoogle = findViewById(R.id.btnSignInGoogle);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -116,7 +113,9 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
+                if (account != null) {
+                    firebaseAuthWithGoogle(account);
+                }
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.e(TAG, "Google sign in failed", e);

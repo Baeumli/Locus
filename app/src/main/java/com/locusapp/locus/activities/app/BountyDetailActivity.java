@@ -13,7 +13,6 @@ import com.locusapp.locus.models.FirebaseDAO;
 public class BountyDetailActivity extends AppCompatActivity {
 
     private TextView lblTitle, lblHint, lblCreator;
-    private Button btnStartSearch;
 
     private double latitude, longitude;
     private String winMessage;
@@ -27,7 +26,7 @@ public class BountyDetailActivity extends AppCompatActivity {
         lblTitle = findViewById(R.id.lblTitle);
         lblHint = findViewById(R.id.lblHint);
         lblCreator = findViewById(R.id.lblCreator);
-        btnStartSearch = findViewById(R.id.btnStartSearch);
+        Button btnStartSearch = findViewById(R.id.btnStartSearch);
 
         String id = getIntent().getStringExtra("id");
 

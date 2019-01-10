@@ -21,7 +21,7 @@ public class CameraHandler {
 
     private String mCurrentPhotoPath, imageFileName;
 
-    public Bitmap setPic(int targetW, int targetH) throws IOException {
+    public Bitmap setPic(int targetW, int targetH) {
 
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -43,7 +43,7 @@ public class CameraHandler {
         return bitmap;
     }
 
-    public Bitmap rotateImage(Bitmap bitmap) {
+    Bitmap rotateImage(Bitmap bitmap) {
         ExifInterface exifInterface = null;
         try {
             exifInterface = new ExifInterface(mCurrentPhotoPath);
@@ -66,8 +66,7 @@ public class CameraHandler {
             default:
         }
 
-        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        return rotatedBitmap;
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
 
     public File createImageFile(Context context) throws IOException {

@@ -39,8 +39,6 @@ import java.util.Map;
 
 public class CreateBountyActivity extends AppCompatActivity {
 
-
-
     private final String TAG = "BountyListActivity";
 
     // Permission variables
@@ -51,9 +49,7 @@ public class CreateBountyActivity extends AppCompatActivity {
 
     private EditText etTitle, etHint, etWinMessage;
     private ImageView imgView;
-    private FloatingActionButton btnTakePhoto;
     private Boolean mLocationPermissionsGranted = false;
-    private Button btnCreateBounty;
     private LruCache<String, Bitmap> mMemoryCache;
 
     @Override
@@ -62,13 +58,11 @@ public class CreateBountyActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_create_bounty);
 
-        // XML Linking
         etTitle = findViewById(R.id.etTitle);
         etHint = findViewById(R.id.etHint);
         etWinMessage = findViewById(R.id.etWinMessage);
-        // UI variables
-        btnTakePhoto = findViewById(R.id.btnTakePhoto);
-        btnCreateBounty = findViewById(R.id.btnCreateBounty);
+        FloatingActionButton btnTakePhoto = findViewById(R.id.btnTakePhoto);
+        Button btnCreateBounty = findViewById(R.id.btnCreateBounty);
         imgView = findViewById(R.id.imgView);
 
         // Get Permission to use GPS
@@ -79,7 +73,6 @@ public class CreateBountyActivity extends AppCompatActivity {
             imgView.setImageBitmap(bitmap);
         }
 
-        // onClick Events
         btnTakePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,17 +120,13 @@ public class CreateBountyActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            try {
-                int width = imgView.getWidth();
-                int height = imgView.getHeight();
+            int width = imgView.getWidth();
+            int height = imgView.getHeight();
 
-                Bitmap bitmap = CameraHandler.getCameraHandler().setPic(width, height);
+            Bitmap bitmap = CameraHandler.getCameraHandler().setPic(width, height);
 
-                imgView.setImageBitmap(bitmap);
+            imgView.setImageBitmap(bitmap);
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -146,12 +135,12 @@ public class CreateBountyActivity extends AppCompatActivity {
         FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try{
-                final Task location = fusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
+                final Task<Location> location = fusedLocationProviderClient.getLastLocation();
+
+                location.addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful() && task.getResult() != null){
-                            Log.d(TAG, "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
 
                             String userEmail = "";
@@ -168,8 +157,6 @@ public class CreateBountyActivity extends AppCompatActivity {
                             bounty.put("title", etTitle.getText().toString());
                             bounty.put("win_message", etWinMessage.getText().toString());
 
-                            imgView.setDrawingCacheEnabled(true);
-                            imgView.buildDrawingCache();
                             Bitmap bitmap = ((BitmapDrawable)imgView.getDrawable()).getBitmap();
                             String imageFileName = CameraHandler.getCameraHandler().getImageFileName();
 
@@ -234,8 +221,6 @@ public class CreateBountyActivity extends AppCompatActivity {
             }
         }
     }
-
-    // Singleton for Camera Stuff
 
     @Override
     protected void onStart() {

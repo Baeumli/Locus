@@ -14,18 +14,14 @@ import com.locusapp.locus.models.GlideApp;
 
 public class WinActivity extends AppCompatActivity {
 
-    private ImageView imgViewWin;
-    private TextView lblWinMessage;
-    private Button btnClose;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
 
-        imgViewWin = findViewById(R.id.imgViewWin);
-        lblWinMessage = findViewById(R.id.lblWinMessage);
-        btnClose = findViewById(R.id.btnClose);
+        ImageView imgViewWin = findViewById(R.id.imgViewWin);
+        TextView lblWinMessage = findViewById(R.id.lblWinMessage);
+        Button btnClose = findViewById(R.id.btnClose);
 
         String image = getIntent().getStringExtra("image");
         String winMessage = getIntent().getStringExtra("message");

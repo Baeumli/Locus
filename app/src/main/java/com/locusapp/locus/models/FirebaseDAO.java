@@ -90,7 +90,7 @@ public class FirebaseDAO {
                             DocumentSnapshot document = task.getResult();
                             String title = document.getString("title");
                             String hint = document.getString("hint");
-                            String creator = (String) document.getString("creator");
+                            String creator = document.getString("creator");
                             double lat = document.getGeoPoint("location").getLatitude();
                             double lng = document.getGeoPoint("location").getLongitude();
                             String image = document.getString("image");

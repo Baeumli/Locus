@@ -48,9 +48,7 @@
 
         <service android:name=".models.GeofenceTransitionsIntentService" />
 
-        <activity android:name=".activities.app.WinActivity"
-            android:noHistory="true"
-            android:launchMode="singleInstance">
+        <activity android:name=".activities.app.WinActivity">
         </activity>
     </application>
 
